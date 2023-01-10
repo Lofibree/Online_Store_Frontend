@@ -2,6 +2,7 @@ import { Box, Button, Container, Grid, MenuItem, Modal, TextField, Typography } 
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCreateType, fetchTypes } from '../../redux/slices/types';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 const AddType = () => {
 
@@ -37,7 +38,7 @@ const AddType = () => {
     
     return (
         <div>
-            <Button onClick={createType}>Add type</Button>
+            <Button onClick={createType} endIcon={<AddBoxOutlinedIcon/>}>Add type</Button>
             <Modal open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"

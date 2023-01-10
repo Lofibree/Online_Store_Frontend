@@ -1,7 +1,8 @@
-import { Box, Button, Container, Grid, MenuItem, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, IconButton, MenuItem, Modal, TextField, Typography } from '@mui/material';
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCreateBrand } from '../../redux/slices/brands';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 
 
 
@@ -39,7 +40,7 @@ const AddBrand = () => {
     
     return (
         <div>
-            <Button onClick={createBrand}>Add brand</Button>
+            <Button onClick={createBrand} endIcon={<AddBoxOutlinedIcon/>}>Add brand</Button>
             <Modal open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
