@@ -1,0 +1,92 @@
+.card {
+   width: 250px
+}
+
+.card:hover {
+    /* border: 1px solid #4361ee; */
+    box-shadow: 0 0 0 1px #000000;
+    cursor: pointer;
+}
+/* 
+.wrapper {
+    padding: 10px;
+}
+.title {
+    font-size: 24px;
+    margin: 5px auto;
+    margin-left: 35px;
+    display: flex;
+    align-items: center;
+}
+.title a {
+    text-decoration: none;
+    color: #000;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 5px;
+}
+.title a:hover {
+    color: #4361ee;
+}
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.info a {
+    text-decoration: none;
+}
+.info a:hover {
+    color: red;
+}
+.details {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.newsDetails {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+
+.commentIconBox {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-left: auto;
+    opacity: 0.5;
+}
+
+.commentIconBox svg {
+    font-size: 20px;
+    margin-right: 5px;
+    color: blue;
+}
+.starIconBox {
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+    margin-right: 20px;
+    opacity: 0.5;
+}
+
+.starIconBox svg {
+    font-size: 22px;
+    margin-right: 5px;
+    color: gold;
+}
+
+.additional {
+    font-size: 12px;
+    opacity: 0.6;
+}
+.externalLink:hover {
+    cursor: pointer;
+} */

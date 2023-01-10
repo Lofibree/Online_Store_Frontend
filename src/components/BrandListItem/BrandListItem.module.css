@@ -1,0 +1,6 @@
+.textField {
+    display: none;
+}
+.textField.active {
+    display: block;
+}
