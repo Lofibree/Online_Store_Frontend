@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDevices, fetchCreateDevice } from '../../redux/slices/devices';
 import Device from '../../components/Device/Device';
-// import { useSelector } from 'react-redux';
 import { selectIsAuth } from '../../redux/slices/auth';
 import AddDevice from '../../components/AddDevice/AddDevice';
 import { selectIsAdmin } from '../../redux/slices/auth';
@@ -15,11 +14,9 @@ const Home = () => {
 
 
     const dispatch = useDispatch()
-    // const isAuth = useSelector(selectIsAuth)
     const isAdmin = useSelector(selectIsAdmin)
 
     const areDevicesLoading = Boolean(useSelector(state => state.devices.status) === 'loaded')
-    // console.log(areDevicesLoading)
 
     React.useEffect(() => {
         dispatch(fetchDevices())
@@ -30,7 +27,7 @@ const Home = () => {
     const devicesEl = (devices && areDevicesLoading
         ? devices.map(d => <Grid item ><Device {...d}/></Grid>)
         : [...Array(5)].map(d => (
-            <Skeleton variant='rectangular' width='250px' height='420px' sx={{ margin: 1 }} />
+            <Skeleton variant='rectangular' width='250px' height='420px' sx={{ margin: 4 }} />
         ))
     )
 
@@ -38,11 +35,11 @@ const Home = () => {
 
     return (
         <Container maxWidth='lg'>
-            {isAdmin
+            {/* {isAdmin
                 ? <AddDevice />
                 : ''
-            }
-            <Grid container rowSpacing={1}>
+            } */}
+            <Grid container rowSpacing={1} sx={{marginTop: 5}}>
                 {devicesEl}
             </Grid>
         </Container>

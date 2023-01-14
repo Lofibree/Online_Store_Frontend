@@ -22,8 +22,28 @@ export const fetchCreateDevice = createAsyncThunk('devices/fetchCreateDevice', a
     // debugger
     return data
 })
+export const fetchUpdateDevice = createAsyncThunk('devices/fetchUpdateDevice', async (form) => {
+    // debugger
+    const formData = new FormData()
+    formData.append('name', form.name)
+    formData.append('price', form.price)
+    formData.append('typeId', form.typeId)
+    formData.append('brandId', form.brandId)
+    formData.append('info', JSON.stringify(form.info))
+    formData.append('img', form.img)
+    const { data } = await axios.patch(`/device/${form.id}`, formData)
+    // console.log(data)
+    // debugger
+    return data
+})
 export const fetchDeleteDevice = createAsyncThunk('devices/fetchDeleteDevice', async (id) => {
     const {data} = await axios.delete(`/device/${id}`)
+    // console.log(data)
+    // debugger
+    return data
+})
+export const fetchDeleteDeviceInfo = createAsyncThunk('devices/fetchDeleteDeviceInfo', async (id) => {
+    const {data} = await axios.delete(`/device/info/${id}`)
     // console.log(data)
     // debugger
     return data

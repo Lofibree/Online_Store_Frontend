@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, Grid, MenuItem, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, IconButton, MenuItem, Modal, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDevices, fetchCreateDevice } from '../../redux/slices/devices';
-import { useEffect } from 'react';
 import { fetchTypes } from '../../redux/slices/types';
 import { fetchBrands } from '../../redux/slices/brands';
 import AddType from '../AddType/AddType';
 import AddBrand from '../AddBrand/AddBrand';
-import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
-import EuroOutlinedIcon from '@mui/icons-material/EuroOutlined';
-import CurrencyRubleOutlinedIcon from '@mui/icons-material/CurrencyRubleOutlined';
+
+
+
+
 
 const AddDevice = () => {
 
-
-    // const [types, setTypes] = useState([{ name: 'Smartphone', id: 1 }, { name: 'TV', id: 2 }])
-    // const [brands, setBrands] = useState([{ name: 'Nokia', id: 1 }, { name: 'iPhone', id: 2 }])
 
     const typesStore = useSelector(state => state.types.data)
     const brandsStore = useSelector(state => state.brands.data)
@@ -32,18 +29,17 @@ const AddDevice = () => {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState('');
     const [price, setPrice] = React.useState('');
-    // const [currency, setCurrency] = React.useState('');
     const [type, setType] = React.useState('');
     const [typeId, setTypeId] = React.useState('');
     const [brand, setBrand] = React.useState('');
     const [brandId, setBrandId] = React.useState('');
     const [img, setImg] = React.useState('');
+    const [info, setInfo] = useState([])
 
 
-    const createDevice = () => setOpen(true)
+    const openModal = () => setOpen(true)
     const handleName = (e) => setName(e.target.value)
     const handlePrice = (e) => setPrice(e.target.value)
-    // const handlePriceCurrency = (e) => setCurrency(e.target.value)
     const handleType = (e) => {
         setType(e.target.value)
         const type = typesStore.find(t => t.name === e.target.value)
@@ -56,7 +52,13 @@ const AddDevice = () => {
     }
     const handleClose = () => setOpen(false);
 
-
+    const addInfo = () => setInfo([...info, { title: '', description: '', number: Date.now() }])
+    const changeInfo = (key, value, number) => {
+        setInfo(info.map(i => i.number === number ? { ...i, [key]: value } : i))
+    }
+    const removeInfo = (number) => {
+        setInfo(info.filter(i => i.number !== number))
+    }
     const handleChangeFile = (e) => {
         const file = e.target.files[0]
         if (file.size < 1024 * 1024) {
@@ -69,15 +71,13 @@ const AddDevice = () => {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('price', price)
-        // formData.append('priceCurrency', currency)
         formData.append('typeId', typeId)
         formData.append('brandId', brandId)
         formData.append('img', img)
-        dispatch(fetchCreateDevice(formData))
-        handleClose()
+        formData.append('info', JSON.stringify(info))
+        dispatch(fetchCreateDevice(formData)).then(data => handleClose())
     }
 
-    // const currencies = []
 
     const style = {
         position: 'absolute',
@@ -97,7 +97,7 @@ const AddDevice = () => {
     return (
         <>
             <Box sx={{ margin: 2 }}>
-                <Button variant='outlined' color='secondary' onClick={createDevice}>Add device</Button>
+                <Button variant='outlined' color='secondary' onClick={openModal}>Add device</Button>
             </Box>
             <Modal open={open}
                 onClose={handleClose}
@@ -106,77 +106,63 @@ const AddDevice = () => {
             >
                 <Box sx={style} component="form">
                     <Typography variant='h4' component='div'>Create new device</Typography>
-                    <TextField value={name} onChange={handleName} label='Name' sx={{ margin: 1 }} size='small' />
-                    <Box>
-                        <TextField value={price} onChange={handlePrice} label='Price' size='small' />
-                        {/* <TextField
-                            value={currency}
-                            onChange={handlePriceCurrency}
-                            select
-                            size='small'
-                            id="outlined-select-currency"
-                        >
-                            <MenuItem
-                                // value='$'
-                                value='dollar'
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid', borderRadius: '10px', padding: 1, margin: 0.5 }}>
+                        <TextField value={name} onChange={handleName} label='Name' sx={{ margin: 1 }} size='small' />
+                        <TextField value={price} onChange={handlePrice} type='number' label='Price' size='small' />
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <TextField
+                                id="outlined-select-currency"
+                                select
+                                label='Type'
+                                sx={{ minWidth: 100, margin: 1 }}
+                                size='small'
+                                value={type}
+                                onChange={handleType}
                             >
-                                <AttachMoneyOutlinedIcon sx={{fontSize: '22px'}} />
-                            </MenuItem>
-                            <MenuItem
-                                // value='€'
-                                value='euro'
+                                {typesStore
+                                    .map((option) => (
+                                        <MenuItem value={option.name} key={option.id}>
+                                            {option.name}
+                                        </MenuItem>
+                                    ))}
+                            </TextField>
+                            <AddType />
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <TextField
+                                id="outlined-select-currency"
+                                select
+                                label='Brand'
+                                sx={{ minWidth: 100, margin: 1 }}
+                                size='small'
+                                value={brand}
+                                onChange={handleBrand}
                             >
-                                <EuroOutlinedIcon sx={{fontSize: '22px'}}/>
-                            </MenuItem>
-                            <MenuItem
-                                // value='₽'
-                                value='ruble'
-                            >
-                                <CurrencyRubleOutlinedIcon sx={{fontSize: '22px'}}/>
-                            </MenuItem>
-                        </TextField> */}
+                                {brandsStore
+                                    .map((option) => (
+                                        <MenuItem value={option.name} key={option.id}>
+                                            {option.name}
+                                        </MenuItem>
+                                    ))}
+                            </TextField>
+                            <AddBrand />
+                        </Box>
+                        <Box>
+                            <Button onClick={() => inputFileRef.current.click()}>Выбрать фото с ПК</Button>
+                            <input type="file" onChange={handleChangeFile} ref={inputFileRef} hidden />
+                        </Box>
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <TextField
-                            id="outlined-select-currency"
-                            select
-                            label='Type'
-                            sx={{ minWidth: 100, margin: 1 }}
-                            size='small'
-                            value={type}
-                            onChange={handleType}
-                        >
-                            {typesStore
-                                .map((option) => (
-                                    <MenuItem value={option.name} key={option.id}>
-                                        {option.name}
-                                    </MenuItem>
-                                ))}
-                        </TextField>
-                        <AddType />
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <TextField
-                            id="outlined-select-currency"
-                            select
-                            label='Brand'
-                            sx={{ minWidth: 100, margin: 1 }}
-                            size='small'
-                            value={brand}
-                            onChange={handleBrand}
-                        >
-                            {brandsStore
-                                .map((option) => (
-                                    <MenuItem value={option.name} key={option.id}>
-                                        {option.name}
-                                    </MenuItem>
-                                ))}
-                        </TextField>
-                        <AddBrand />
-                    </Box>
-                    <Box>
-                        <Button onClick={() => inputFileRef.current.click()}>Выбрать фото с ПК</Button>
-                        <input type="file" onChange={handleChangeFile} ref={inputFileRef} hidden />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid', borderRadius: '10px', padding: 1 }}>
+                        <Button onClick={addInfo}>Add info</Button>
+                        {info.map((info) => (
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <Box>
+                                    <TextField size='small' sx={{ margin: 0.5 }} label='Название свойства' value={info.title} onChange={(e) => changeInfo('title', e.target.value, info.number)} />
+                                    <TextField size='small' sx={{ margin: 0.5 }} label='Значение свойства' value={info.description} onChange={(e) => changeInfo('description', e.target.value, info.number)} />
+                                </Box>
+                                <Button onClick={() => removeInfo(info.number)}>Remove info</Button>
+                            </Box>
+                        ))}
                     </Box>
                     <Button onClick={onSubmit} color='secondary'>Submit</Button>
                 </Box>

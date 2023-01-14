@@ -2,11 +2,12 @@ import { Box, Container, IconButton, List, ListItem, ListItemText, Typography } 
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { fetchOneDevice } from '../../redux/slices/devices';
 import styles from './FullDevice.module.css'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import { useState } from 'react';
 
 const FullDevice = () => {
 
@@ -14,9 +15,9 @@ const FullDevice = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const device = useSelector(state => state.devices.data)
-
+    
     useEffect(() => {
-        dispatch(fetchOneDevice(id))
+       dispatch(fetchOneDevice(id))
     }, [])
 
     const goBack = () => navigate(-1)
@@ -43,9 +44,17 @@ const FullDevice = () => {
                             </Box>
                         </Box>
                     </Box>
-                    <Container maxWidth='sm'>
+                    <Container maxWidth='sm' sx={{marginTop: 5}}>
+                        <Typography variant='h4'>Сharacteristics</Typography>
                         <List>
-                            {[...Array(5)].map((info) => (
+                            {
+                            device && device[0].info 
+                            ? device[0].info.map(info => (
+                                <ListItem divider>
+                                    <ListItemText primary={info.title} secondary={info.description} primaryTypographyProps={{fontSize: '26px'}}/>
+                                </ListItem>
+                            ))
+                            : [...Array(5)].map((info) => (
                                 <ListItem divider>
                                     <ListItemText primary={'text'} />
                                 </ListItem>

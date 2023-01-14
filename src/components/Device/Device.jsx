@@ -14,19 +14,6 @@ const Device = ({ name, price, id, typeId, brandId, img }) => {
 
 
     return (
-        // <div className={styles.item}>
-        //     <div className={styles.wrapper}>
-        //         {/* <img/> */}
-        //         <div>{name ? name : 'no name'}</div>
-        //         <div>{price ? price : 'no price'}</div>
-        //         <div>{price ? price : 'no price'}</div>
-        //         <div>{id ? id : 'id'}</div>
-        //         <div>{typeId ? typeId : 'typeId'}</div>
-        //         <div>{brandId ? brandId : 'brandId'}</div>
-
-
-        //     </div>
-        // </div>
         <Container maxWidth='xs'>
             <Card className={styles.card} onClick={() => navigate(`/device/${id}`)}>
                 <CardMedia

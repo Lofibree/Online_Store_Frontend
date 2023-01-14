@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemButton, ListItemText } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchDeleteDevice, fetchDevices } from '../../redux/slices/devices';
 
@@ -14,11 +14,14 @@ const DeviceListItem = ({ name, price, img, id }) => {
 
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleDelete = () => {
-        dispatch(fetchDeleteDevice(id)).then(() => {
-            dispatch(fetchDevices())
-        })
+        if (window.alert('Точно хотите удалить девайс?')) {
+            dispatch(fetchDeleteDevice(id)).then(() => {
+                dispatch(fetchDevices())
+            })
+        }
     }
 
     return (
@@ -30,7 +33,7 @@ const DeviceListItem = ({ name, price, img, id }) => {
             </ListItemAvatar>
             <ListItemText primary={name} secondary={'Price: ' + price} primaryTypographyProps={{ fontSize: 20 }} />
             <Box sx={{ display: 'flex' }}>
-                <ListItemButton >
+                <ListItemButton onClick={() => navigate(`/device/${id}/edit`)}>
                     <EditOutlinedIcon />
                 </ListItemButton>
                 <ListItemButton onClick={handleDelete}>
