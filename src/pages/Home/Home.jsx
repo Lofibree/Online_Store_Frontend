@@ -1,11 +1,8 @@
-import { Box, Button, Container, Grid, MenuItem, Modal, Skeleton, TextField, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Container, Grid, Skeleton } from '@mui/material';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDevices, fetchCreateDevice } from '../../redux/slices/devices';
+import { fetchDevices } from '../../redux/slices/devices';
 import Device from '../../components/Device/Device';
-import { selectIsAuth } from '../../redux/slices/auth';
-import AddDevice from '../../components/AddDevice/AddDevice';
-import { selectIsAdmin } from '../../redux/slices/auth';
 
 
 
@@ -14,7 +11,6 @@ const Home = () => {
 
 
     const dispatch = useDispatch()
-    const isAdmin = useSelector(selectIsAdmin)
 
     const areDevicesLoading = Boolean(useSelector(state => state.devices.status) === 'loaded')
 
@@ -35,10 +31,6 @@ const Home = () => {
 
     return (
         <Container maxWidth='lg'>
-            {/* {isAdmin
-                ? <AddDevice />
-                : ''
-            } */}
             <Grid container rowSpacing={1} sx={{marginTop: 5}}>
                 {devicesEl}
             </Grid>

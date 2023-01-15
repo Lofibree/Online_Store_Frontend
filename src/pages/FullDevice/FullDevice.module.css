@@ -3,3 +3,6 @@
     border-radius: 20px;
     margin-right: 10px;
 }
+.full {
+    min-height: 650px;
+}

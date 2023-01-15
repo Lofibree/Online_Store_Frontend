@@ -12,6 +12,7 @@ import Admin from './pages/Admin/Admin';
 import FullDevice from './pages/FullDevice/FullDevice';
 import EditDevice from './pages/EditDevice/EditDevice';
 import AddDevice from './components/AddDevice/AddDevice';
+import Basket from './pages/Basket/Basket';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
         <Route path='/device/:id' element={<FullDevice />} />
         <Route path='/device/:id/edit' element={<EditDevice />} />
         <Route path='/device/add' element={<AddDevice />} />
+        <Route path='/basket' element={<Basket />} />
       </Routes>
       <Footer />
     </div>

@@ -2,9 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeviceListItem from '../DeviceListItem/DeviceListItem'
 import { Skeleton, Typography, List, Box } from '@mui/material';
-import AddDevice from '../AddDevice/AddDevice';
 
-const DevicesBlock = () => {
+const DevicesBlock = ({children}) => {
 
 
     const dispatch = useDispatch()
@@ -23,7 +22,7 @@ const DevicesBlock = () => {
         <Box>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Typography variant='h4' component='div'>Devices</Typography>
-                <AddDevice />
+                {children}
             </Box>
             <List>
                 {devicesEl}

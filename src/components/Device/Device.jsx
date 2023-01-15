@@ -4,18 +4,20 @@ import styles from './Device.module.css'
 import { Typography } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { fetchCreateBasketDevice } from '../../redux/slices/devices';
 
 
 const Device = ({ name, price, id, typeId, brandId, img }) => {
 
+    const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
 
     return (
         <Container maxWidth='xs'>
-            <Card className={styles.card} onClick={() => navigate(`/device/${id}`)}>
+            <Card className={styles.card}>
                 <CardMedia
                     sx={{ height: 300 }}
                     image={'http://localhost:5000/' + img}
@@ -24,12 +26,12 @@ const Device = ({ name, price, id, typeId, brandId, img }) => {
                 />
                 <CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Typography variant='h5' component='div'>{name ? name : 'no name'}</Typography>
-                        <Typography variant='h6' component='div'>{price ? price : 'no price'}</Typography>
+                        <Typography variant='h5' component='div' className={styles.title} onClick={() => navigate(`/device/${id}`)}>{name ? name : 'no name'}</Typography>
+                        <Typography variant='h6' component='div' sx={{color: 'grey'}}>{price ? price : 'no price'}</Typography>
                     </Box>
                 </CardContent>
                 <CardActions>
-                    <IconButton>
+                    <IconButton onClick={() => dispatch(fetchCreateBasketDevice(id))}>
                         <AddShoppingCartIcon />
                     </IconButton>
                 </CardActions>

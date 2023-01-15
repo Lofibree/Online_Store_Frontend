@@ -17,11 +17,13 @@ const DeviceListItem = ({ name, price, img, id }) => {
     const navigate = useNavigate()
 
     const handleDelete = () => {
-        if (window.alert('Точно хотите удалить девайс?')) {
+        // if (alert('Точно хотите удалить девайс?')) {
+            debugger
             dispatch(fetchDeleteDevice(id)).then(() => {
+            debugger
                 dispatch(fetchDevices())
             })
-        }
+        // }
     }
 
     return (

@@ -46,8 +46,8 @@ const Header = () => {
                         </IconButton>
                     </Box>
                     : <Box>
-                        <Link to='/login'>Login</Link>
-                        <Link to='/register'>Register</Link>
+                        <Link to='/login' style={{ margin: 5, color: 'black', textDecoration: 'none' }}>Login</Link>
+                        <Link to='/register' style={{ margin: 5, color: 'black', textDecoration: 'none' }}>Register</Link>
                     </Box>
                 }
             </Container>

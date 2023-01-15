@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import BrandsBlock from '../../components/BrandsBlock/BrandsBlock';
 import TypesBlock from '../../components/TypesBlock/TypesBlock ';
 import DevicesBlock from '../../components/DevicesBlock/DevicesBlock';
+import AddDevice from '../../components/AddDevice/AddDevice';
 
 
 const Admin = () => {
@@ -35,7 +36,7 @@ const Admin = () => {
             <Paper elevation={10} variant='outlined' sx={{ marginTop: 5 }}>
                 <BrandsBlock/>
                 <TypesBlock/>
-                <DevicesBlock/>
+                <DevicesBlock><AddDevice/></DevicesBlock>
             </Paper>
         </Container>
     );

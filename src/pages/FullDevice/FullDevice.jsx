@@ -2,12 +2,11 @@ import { Box, Container, IconButton, List, ListItem, ListItemText, Typography } 
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchOneDevice } from '../../redux/slices/devices';
 import styles from './FullDevice.module.css'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import { useState } from 'react';
 
 const FullDevice = () => {
 
@@ -15,20 +14,20 @@ const FullDevice = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const device = useSelector(state => state.devices.data)
-    
+
     useEffect(() => {
-       dispatch(fetchOneDevice(id))
+        dispatch(fetchOneDevice(id))
     }, [])
 
     const goBack = () => navigate(-1)
 
     return (
-        <Container maxWidth='md' sx={{ marginTop: 5 }}>
+        <Container maxWidth='md' sx={{ marginTop: 5 }} className={styles.full}>
             {device
                 ? <>
-                    <Box sx={{display: 'flex', marginBottom: 2}}>
+                    <Box sx={{ display: 'flex', marginBottom: 2 }}>
                         <IconButton onClick={goBack} >
-                            <ArrowBackOutlinedIcon sx={{fontSize: '30px', color: 'black'}} />
+                            <ArrowBackOutlinedIcon sx={{ fontSize: '30px', color: 'black' }} />
                         </IconButton>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -39,27 +38,28 @@ const FullDevice = () => {
                                 {device[0].rating}
                             </Typography>
                             <Box>
-                                <Typography variant='h3'>{device[0].name}</Typography>
-                                <Typography variant='h5' sx={{ color: 'grey' }}>{device[0].price}</Typography>
+                                <Typography variant='h4'>{device[0].name}</Typography>
+                                <Typography variant='h6' sx={{ color: 'grey' }}>{device[0].price}</Typography>
                             </Box>
                         </Box>
                     </Box>
-                    <Container maxWidth='sm' sx={{marginTop: 5}}>
+                    <Container maxWidth='sm' sx={{ marginTop: 5 }}>
                         <Typography variant='h4'>Сharacteristics</Typography>
-                        <List>
-                            {
-                            device && device[0].info 
+                        {device && device[0].info
                             ? device[0].info.map(info => (
-                                <ListItem divider>
-                                    <ListItemText primary={info.title} secondary={info.description} primaryTypographyProps={{fontSize: '26px'}}/>
-                                </ListItem>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid grey', marginBottom: 2 }}>
+                                    <Typography component='div' sx={{ color: 'grey' }}>{info.title}</Typography>
+                                    <Typography component='div' sx={{ color: 'black' }}>{info.description}</Typography>
+                                </Box>
                             ))
-                            : [...Array(5)].map((info) => (
-                                <ListItem divider>
-                                    <ListItemText primary={'text'} />
-                                </ListItem>
-                            ))}
-                        </List>
+                            : <List>
+                                {[...Array(5)].map((info) => (
+                                    <ListItem divider>
+                                        <ListItemText primary={'text'} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        }
                     </Container>
                 </>
                 : ''

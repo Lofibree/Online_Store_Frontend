@@ -49,6 +49,19 @@ export const fetchDeleteDeviceInfo = createAsyncThunk('devices/fetchDeleteDevice
     return data
 })
 
+export const fetchCreateBasketDevice = createAsyncThunk('basket/fetchCreateBasketDevice', async (id) => {
+    const {data} = await axios.post(`/basket/device/${id}`)
+    // console.log(data)
+    debugger
+    return data
+})
+export const fetchBasketDevices = createAsyncThunk('basket/fetchBasketDevices', async () => {
+    const {data} = await axios.get(`/basket`)
+    // console.log(data)
+    debugger
+    return data
+})
+
 
 
 
@@ -113,6 +126,17 @@ const devicesSlice = createSlice({
             state.status = 'error'
             state.data = null   
         }, 
+
+        [fetchBasketDevices.fulfilled]: (state, action) => {
+            state.status = 'loaded'
+            debugger
+            state.data = action.payload
+        },
+        [fetchBasketDevices.rejected]: (state, action) => {
+            state.status = 'error'
+            debugger
+            state.data = null
+        }
 
     }
 })
